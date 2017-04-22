@@ -17,6 +17,7 @@ app = Flask(__name__, static_url_path='/static')
 
 # Handler for a clean shutdown when pressing Ctrl-C
 def signal_handler(signal, frame):
+    cfg.camera_active = False
     http_server.close()
     sys.exit(0)
 

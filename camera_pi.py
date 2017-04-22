@@ -3,7 +3,7 @@ import io
 import threading
 import picamera
 import config as cfg
-        
+
 def init_camera():
     try:
         camera = picamera.PiCamera()
@@ -11,21 +11,21 @@ def init_camera():
         camera.resolution = (cfg.width, cfg.height)
         camera.hflip = cfg.pi_hflip
         camera.vflip = cfg.pi_vflip
-    
+
         # let camera warm up
         camera.start_preview()
         time.sleep(2)
         return True, camera
     except:
         return False, False
-           
+
 def single_frame():
     stream = io.BytesIO()
     cfg.camera.capture(stream, 'jpeg', use_video_port=True)
     stream.seek(0)
     frame = stream.read()
     return frame
-    
+
 class Camera(object):
     thread = None  # background thread that reads frames from camera
     frame = None  # current frame is stored here by background thread
@@ -46,7 +46,7 @@ class Camera(object):
         self.initialize()
         return self.frame
 
-    
+
 
     @classmethod
     def _thread(cls):
@@ -62,7 +62,7 @@ class Camera(object):
             stream.truncate()
 
             # if there hasn't been any clients asking for frames in
-            # the last 10 seconds stop the thread
+            # the last 10 seconds or a manual app shutdown was requested then stop the thread.
             if time.time() - cls.last_access > 10 or cfg.camera_active is False:
                 break
         cls.thread = None
