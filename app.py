@@ -46,7 +46,6 @@ def gen(camera):
 # Returns JSON object with status data
 @app.route('/heartbeat')
 def heartbeat():
-    cfg.watchdog = 0
     output = {}
     output['f'] = cfg.video_fps
     output['v'] = cfg.video_status

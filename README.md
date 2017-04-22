@@ -1,14 +1,15 @@
 # PiWifiCam
 A simple livestream application designed for the Raspberry Pi.  
-This is an educational application with the focus on keeping the code simple and understandable.
-The application is basically the video streaming part of [STS-Pilot](https://github.com/mark-orion/STS-PiLot) without the robotics remote control components.
+This is an educational application with the focus on keeping the code simple and understandable.  
+The application is basically the video streaming part of [STS-PiLot](https://github.com/mark-orion/STS-PiLot) without the robotics remote control components.
 
 ## Features
 * Responsive (portrait and landscape mode) interface for use on desktops, laptops, tablets and phones.
 * Tested on Raspberry Pi 3 and Raspberry Pi Zero W.
 * Frontend requires only HTML, Javascript and CSS - no proprietary plugins needed.
 * Data and video connection is automatically reestablished after connection loss.
-* Threaded (fast, low latency) and non-threaded (slower, low CPU usage) video capture.
+* Threaded (fast, low latency) capture interface.
+* Alternative non-threaded (slower, low CPU usage) video capture for lower spec. computers like the Raspberry Pi Zero.
 * Use camera_cv.py for standard webcams.
 
 ## Requirements
@@ -22,18 +23,18 @@ Apple Safari and iOS browsers have limited or broken MJPEG support.
 Please use one of the tested browsers instead.
 
 ## Install Dependencies (Picamera, Flask, Gevent, Simplejson)
-sudo apt-get install python-picamera python-flask python-gevent python-simplejson
+sudo apt-get install python-picamera python-flask python-gevent python-simplejson  
 For generic webcam support (camera_cv.py) add: sudo apt-get install python-opencv python-pil
 
 ## Install PiWifiCam
 Clone or download the application into a directory of your choice:
-git clone https://github.com/mark-orion/PiWifiCam.git
+git clone https://github.com/mark-orion/PiWifiCam.git  
 You can update the already cloned application from within its directory:  
 git remote update  
 git pull
 
 ## Running the program (as normal user, no "sudo" required)  
-cd PiWifiCam
+cd PiWifiCam  
 python app.py  
 
 ## Start the program automatically while booting
@@ -46,7 +47,7 @@ Restart the Raspberry Pi and test if program starts at boot:
 
 ## Using PiWifiCam
 The web interface runs on port 5000 of the Raspberry Pi. You can access it via http://ip_goes_here:5000 or at http://hostname.local:5000 if you have Avahi / mDNS running on your Pi and the client. Hostname is the hostname of your Pi that can be changed with raspi-config (advanced settings).  
-http://ip_goes_here:5000/?video=[msec] Opens the slower non-threaded interface. This interface will grab a single video frame at the given interval in milliseconds.
+http://ip_goes_here:5000/?video=300 Opens the slower, non-threaded interface. This interface will grab a single video frame at the given interval in milliseconds (300 in the example).
 
 ## Web API / URLs
 
@@ -61,9 +62,6 @@ Non threaded (low CPU) single frame JPEG output.
 
 ### /
 The root serves the web interface itself.
-
-### /?video=n
-Calls the web interface without live video enabled.
 
 ### /?video=[msecs]
 Use non-threaded video with [msecs] delay between frames.
